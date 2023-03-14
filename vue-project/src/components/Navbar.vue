@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <router-link class="navbar-brand" to="/">Navbar</router-link>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -24,17 +24,18 @@ import getUser from "../composable/getUser"
 import {auth} from "../firebase/config"
 import { signOut } from "@firebase/auth";
 import { useRouter } from "vue-router";
+import router from "../router";
 export default {
-  setup(){
-    const {user} = getUser();
-    const router = useRouter();
-
-    const handleSignOut =async () =>{
-        await signOut(auth)
-        router.push({name:'login'})
-    }
-    return {user,handleSignOut}
-  }
+    setup() {
+        const { user } = getUser();
+        const router = useRouter();
+        const handleSignOut = async () => {
+            await signOut(auth);
+            router.push({ name: "login" });
+        };
+        return { user, handleSignOut };
+    },
+    components: { router }
 }
 
 </script>

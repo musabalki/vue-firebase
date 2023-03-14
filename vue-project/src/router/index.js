@@ -34,6 +34,11 @@ const router = createRouter({
       component: () => import('../views/Share.vue'),
       beforeEnter:userControl
     },  
+    {
+      path: '/browse/:id',
+      name: 'browse',
+      component: () => import('../views/Browse.vue'),
+    },  
   ]
 })
 

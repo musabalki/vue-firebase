@@ -1,9 +1,49 @@
-<script setup>
-import Navbar from '../components/Navbar.vue';
+<template>
+    <div class="container">
+        <div class="row" v-if="gonderiler.length !==0">
+          <div class="col-sm-6 mb-3" v-for="g in gonderiler" :key="g.id">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{g.gonderi}}</h5>
+                <p class="card-text">{{g.gKullaniciAd}}</p>
+                <router-link :to="'/browse/'+g.id" class="btn btn-primary">İncele</router-link>
+              </div>
+              <div class="card-footer text-muted text-center">
+                {{g.tarih}}
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="row" v-if="gonderiler.length == 0">
+          <div class="col-sm-6 mb-3">
+            <p class="h3">Henüz gönderi eklenmedi</p>
+          </div>
+        </div>
+        </div>
+</template>
+<script>
+import {db} from "../firebase/config"
+import {collection,onSnapshot} from "firebase/firestore"
+import {ref} from "vue"
+import moment from "moment"
+export default {
+    setup(){
+        const gonderiler = ref([])
+        moment.locale('tr')
+        onSnapshot(collection(db,'gonderiler'),snap=>{
+            snap.docs.forEach(doc=>{
+                gonderiler.value.push({...doc.data(),id:doc.id,tarih:moment(doc.data().tarih.toDate()).fromNow()})
+            })
+        })
+        return {gonderiler}
+    }
+}
 </script>
 
-<template>
-<div>
-    HOME
-</div>
-</template>
+<style scoped>
+    .container{
+        max-width: 600px;
+        padding-top: 50px;
+    }
+</style>
