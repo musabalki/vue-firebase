@@ -1,3 +1,5 @@
 # Vuejs - Firebase
-### Google Auth
-### Firestore CRUD
+
+## Topics
+- Google Auth
+- Firestore CRUD
