@@ -42,7 +42,7 @@ export default {
         onSnapshot(q,querySnapshot => {
             const dizi = [];
             querySnapshot.forEach(doc=>{
-                dizi.push({...doc.data(),id:doc.id,tarih:moment(doc.data().tarih.toDate()).locale('tr').format('LL')})
+                dizi.push({...doc.data(),id:doc.id,tarih:moment(doc.data().tarih?.toDate()).locale('tr').format('LL')})
             })
             gonderiler.value = dizi;
         })
